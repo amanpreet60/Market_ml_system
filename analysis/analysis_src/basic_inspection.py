@@ -22,7 +22,7 @@ if __name__ == "__main__":
     # Example usage of the DataInspector with different strategies.
 
     # Load the data
-    df = pd.read_csv('/Users/amanpreetsingh/Desktop/VSCode/Temp/Market/extracted_data/data.csv')
+    df = pd.read_csv('/Users/amanpreetsingh/Desktop/VSCode/Market/extracted_data/NY-House-Dataset.csv')
 
     obj1 = data_info()
     obj1.inspect(df)

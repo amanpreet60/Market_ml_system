@@ -51,7 +51,7 @@ class DataIngestorFactory:
 
 if __name__ == "__main__":
     # # Specify the file path
-    file_path = "/Users/amanpreetsingh/Desktop/VSCode/Market/data.csv.zip"
+    file_path = "/Users/amanpreetsingh/Desktop/VSCode/Market/data.zip"
 
     # # Determine the file extension
     file_extension = os.path.splitext(file_path)[1]
