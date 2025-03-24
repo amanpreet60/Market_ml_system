@@ -38,17 +38,6 @@ class ZipDataIngestor(DataIngestor):
         # Return the DataFrame
         return df
 
-
-# Implement a Factory to create DataIngestors
-class DataIngestorFactory:
-    @staticmethod
-    def get_data_ingestor(file_extension: str) -> DataIngestor:
-        """Returns the appropriate DataIngestor based on file extension."""
-        if file_extension == ".zip":
-            return ZipDataIngestor()
-        else:
-            raise ValueError(f"No ingestor available for file extension: {file_extension}")
-
 if __name__ == "__main__":
     # # Specify the file path
     file_path = "/Users/amanpreetsingh/Desktop/VSCode/Market/data.zip"
@@ -56,11 +45,8 @@ if __name__ == "__main__":
     # # Determine the file extension
     file_extension = os.path.splitext(file_path)[1]
 
-    # # Get the appropriate DataIngestor
-    data_ingestor = DataIngestorFactory.get_data_ingestor(file_extension)
-
     # # Ingest the data and load it into a DataFrame
-    df = data_ingestor.ingest(file_path)
+    df = ZipDataIngestor().ingest(file_path)
 
     print(df.head())  # Display the first few rows of the DataFrame
     pass
