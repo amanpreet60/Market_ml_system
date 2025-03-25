@@ -53,7 +53,7 @@ class CsvDataIngestor(DataIngestor):
 
 if __name__ == "__main__":
     # # Specify the file path
-    file_path = "/Users/amanpreetsingh/Desktop/VSCode/Market/extracted_data/NY-House-Dataset.csv"
+    file_path = "/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/NY-House-Dataset.csv"
 
     # # Ingest the data and load it into a DataFrame
     df = CsvDataIngestor().ingest(file_path)

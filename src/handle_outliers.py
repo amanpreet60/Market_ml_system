@@ -83,7 +83,7 @@ class feature_skew_kurt(handel_outliers):
         
 if __name__ == '__main__':
 
-    df = pd.read_csv('/Users/amanpreetsingh/Desktop/VSCode/Market/extracted_data/NY-House-Dataset.csv')
+    df = pd.read_csv('/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/NY-House-Dataset.csv')
 
     obj1 = feature_skew_kurt()
     temp = obj1.check_skew_kurt(df,'PRICE')

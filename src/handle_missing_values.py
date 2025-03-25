@@ -60,7 +60,7 @@ class fill_missing_values(handel_missing_values_abc):
     
 if __name__ == "__main__":
 
-    df = pd.read_csv('/Users/amanpreetsingh/Desktop/VSCode/Market/extracted_data/NY-House-Dataset.csv')
+    df = pd.read_csv('/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/NY-House-Dataset.csv')
     obj1 = remove_missing_value().handel(df)
     
 

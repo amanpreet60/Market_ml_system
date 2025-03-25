@@ -1,6 +1,6 @@
 # adding this so that I can import from my other folders : Temporary solution
 import sys
-sys.path.append('/Users/amanpreetsingh/Desktop/VSCode/Market')
+sys.path.append('/Users/amanpreetsingh/My Computer/VSCode/Market')
 
 # code starts here
 from zenml import step

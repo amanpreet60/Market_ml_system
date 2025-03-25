@@ -17,7 +17,7 @@ class identify_missing_value(missing_value):
 if __name__ == "__main__":
 
     # Load the data
-    df = pd.read_csv('/Users/amanpreetsingh/Desktop/VSCode/Market/extracted_data/NY-House-Dataset.csv')
+    df = pd.read_csv('/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/NY-House-Dataset.csv')
 
     # Perform Missing Values Analysis
     obj1 = identify_missing_value()

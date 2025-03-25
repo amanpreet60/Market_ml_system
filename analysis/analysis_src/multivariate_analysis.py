@@ -35,7 +35,7 @@ if __name__ == "__main__":
     # Example usage of the SimpleMultivariateAnalysis class.
 
     # Load the data
-    df = pd.read_csv('/Users/amanpreetsingh/Desktop/VSCode/Market/extracted_data/NY-House-Dataset.csv')
+    df = pd.read_csv('/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/NY-House-Dataset.csv')
 
     selected_features = df[['PRICE', 'BEDS', 'BATH', 'PROPERTYSQFT']]
 

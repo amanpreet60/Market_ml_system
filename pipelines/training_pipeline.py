@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/Users/amanpreetsingh/Desktop/VSCode/Market')
+sys.path.append('/Users/amanpreetsingh/My Computer/VSCode/Market')
 
 
 
@@ -26,7 +26,7 @@ def ml_pipeline():
 
     # Data Ingestion Step
     raw_data = data_ingestion_step(
-        file_path="/Users/amanpreetsingh/Desktop/VSCode/Market/extracted_data/NY-House-Dataset.csv"
+        file_path="/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/NY-House-Dataset.csv"
     )
 
     # Handling Missing Values Step

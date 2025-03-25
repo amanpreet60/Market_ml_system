@@ -33,7 +33,7 @@ if __name__ == "__main__":
     # Example usage of the DataInspector with different strategies.
 
     # Load the data
-    df = pd.read_csv('/Users/amanpreetsingh/Desktop/VSCode/Market/extracted_data/NY-House-Dataset.csv')
+    df = pd.read_csv('/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/NY-House-Dataset.csv')
 
     obj1 = count_plot()
     obj1.my_plot(df,'PRICE')
