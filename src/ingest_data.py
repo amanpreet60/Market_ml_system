@@ -38,15 +38,25 @@ class ZipDataIngestor(DataIngestor):
         # Return the DataFrame
         return df
 
+class CsvDataIngestor(DataIngestor):
+    def ingest(self, file_path: str) -> pd.DataFrame:
+        """Extracts a .zip file and returns the content as a pandas DataFrame."""
+        # Ensure the file is a .zip
+        if not file_path.endswith(".csv"):
+            raise ValueError("The provided file is not a .csv file.")
+  
+        # Read the CSV into a DataFrame
+        df = pd.read_csv(file_path)
+
+        # Return the DataFrame
+        return df
+
 if __name__ == "__main__":
     # # Specify the file path
-    file_path = "/Users/amanpreetsingh/Desktop/VSCode/Market/data.zip"
-
-    # # Determine the file extension
-    file_extension = os.path.splitext(file_path)[1]
+    file_path = "/Users/amanpreetsingh/Desktop/VSCode/Market/extracted_data/NY-House-Dataset.csv"
 
     # # Ingest the data and load it into a DataFrame
-    df = ZipDataIngestor().ingest(file_path)
+    df = CsvDataIngestor().ingest(file_path)
 
     print(df.head())  # Display the first few rows of the DataFrame
     pass
