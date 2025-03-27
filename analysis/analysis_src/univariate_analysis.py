@@ -9,7 +9,7 @@ class univariate_analysis(ABC):
         pass
 
 # for numerical data
-class count_plot(univariate_analysis):
+class hist_plot(univariate_analysis):
     def my_plot(self, df: pd.DataFrame, feature: str):
         plt.figure(figsize=(10, 6))
         sns.histplot(df[feature], kde=True, bins=30)
@@ -19,7 +19,7 @@ class count_plot(univariate_analysis):
         plt.show()
 
 # for categorical data
-class hist_plot(univariate_analysis):
+class count_plot(univariate_analysis):
     def my_plot(self, df: pd.DataFrame, feature: str):
         plt.figure(figsize=(10, 6))
         sns.countplot(x=feature, data=df, palette="muted")
