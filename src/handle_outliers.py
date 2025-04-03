@@ -4,6 +4,7 @@ from abc import ABC, abstractmethod
 import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
+import logging
 from scipy.stats import skew, kurtosis
 
 class handel_outliers(ABC):
@@ -36,18 +37,15 @@ class feature_skew_kurt(handel_outliers):
         else:
             kurtosis_interpret = "Light-tailed (Uniform Distribution)"
 
-        print(skewness_interpret)
-        print(kurtosis_interpret)
-        print(".\n.\n.\n.")
-        print("Z-Score: Best for normally distributed data.\nIQR: Works well for skewed..."
-        " distributions and robust datasets.\nPercentile Capping: Useful when you don't want to lose data.")
+        logging.info('Skewness: ',skewness_interpret)
+        logging.info('Kurtosis: ',kurtosis_interpret)
     
     def z_score(self, df: pd.DataFrame, feature: str):
 
         df['z_score'] = (df[feature] - df[feature].mean()) / df[feature].std()
 
         # Keep only rows where Z-Score is within ±3 standard deviations
-        df_filtered = df[abs(df['z_score']) < 3]
+        df_filtered = df[abs(df['z_score']) > 3]
         print('Outlier exist\nDetected using z-score with threshold 3')
 
         return df_filtered
@@ -61,10 +59,13 @@ class feature_skew_kurt(handel_outliers):
 
         # Define outlier bounds
         lower_bound = Q1 - 1.5 * IQR
+        print(lower_bound)
         upper_bound = Q3 + 1.5 * IQR
+        print(upper_bound)
 
         # Filter data
-        df_filtered = df[(df[feature] < lower_bound) & (df[feature] > upper_bound)]
+        df_filtered = df[(df[feature] >= lower_bound) & (df[feature] <= upper_bound)]
+        print(df_filtered)
         print("Outliers detected using the IQR method.")
 
         return df_filtered
@@ -76,18 +77,32 @@ class feature_skew_kurt(handel_outliers):
         upper_limit = df[feature].quantile(0.95)  # 95th percentile
 
         # Cap values
-        df_filtered = df[(df[feature] < lower_limit) & (df[feature] > upper_limit)]
+        df_filtered = df[(df[feature] >= lower_limit) & (df[feature] <= upper_limit)]
         print("Outliers detected using the winsorization method.")
         return df_filtered
+    
+    def visualize_outliers(self, df: pd.DataFrame, features: list):
+        logging.info(f"Visualizing outliers for features: {features}")
+        for feature in features:
+            plt.figure(figsize=(10, 6))
+            sns.boxplot(x=df[feature])
+            plt.title(f"Boxplot of {feature}")
+            plt.show()
+        logging.info("Outlier visualization completed.")
 
         
 if __name__ == '__main__':
 
     df = pd.read_csv('/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/NY-House-Dataset.csv')
-
+    print(df.shape)
     obj1 = feature_skew_kurt()
-    temp = obj1.check_skew_kurt(df,'PRICE')
+    temp = obj1.check_skew_kurt(df,'BEDS')
     print(temp)
     obj1.process_feature(temp[0],temp[1])
+    df = obj1.iqr(df,'BEDS')
+    print(df.shape)
 
-    df = obj1.winsorization(df,'PRICE')
+    obj1.visualize_outliers(df,['PRICE','BEDS','BATH'])
+    temp = obj1.check_skew_kurt(df,'BEDS')
+    obj1.process_feature(temp[0],temp[1])
+
