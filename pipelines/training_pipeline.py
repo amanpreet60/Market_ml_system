@@ -1,11 +1,13 @@
 import sys
 sys.path.append('/Users/amanpreetsingh/My Computer/VSCode/Market')
 
-
+import pandas as pd
 
 from step._1_data_ingestion_step import data_ingestion_step
 from step._2_handle_missing_value_step import handle_missing_value_step
 from step._3_outlier_detection_step import outlier_detection_step
+from step._4_data_splitter_step import data_splitter_step
+from step._5_feature_engineering import feature_engineering_step
 
 '''from step.data_splitter_step import data_splitter_step
 from step.feature_engineering_step import feature_engineering_step
@@ -36,16 +38,16 @@ def ml_pipeline():
     # Outlier Detection Step
     clean_data = outlier_detection_step(filled_data, column_name="PRICE",eng_type = 'iqr')
 
-    '''# Feature Engineering Step
+    #Data Splitting Step
+    X_train, X_test, y_train, y_test = data_splitter_step(clean_data, target_column="PRICE")
+
+    # Feature Engineering Step
     engineered_data = feature_engineering_step(
-        filled_data, strategy="log", features=["Gr Liv Area", "SalePrice"]
+        y_train, strategy="log", features=["PRICE"]
     )
 
-    # Outlier Detection Step
-    clean_data = outlier_detection_step(engineered_data, column_name="SalePrice")
+    '''
 
-    Data Splitting Step
-    X_train, X_test, y_train, y_test = data_splitter_step(clean_data, target_column="SalePrice")
 
     # Model Building Step
     model = model_building_step(X_train=X_train, y_train=y_train)
@@ -55,7 +57,7 @@ def ml_pipeline():
         trained_model=model, X_test=X_test, y_test=y_test
     )'''
 
-    return clean_data
+    return
 
 
 if __name__ == "__main__":

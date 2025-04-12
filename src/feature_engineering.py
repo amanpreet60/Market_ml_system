@@ -1,20 +1,24 @@
 import logging
+# adding this so that i can import from my other folders : Temporary solution
+import sys
+sys.path.append('/Users/amanpreetsingh/My Computer/VSCode/Market')
 from abc import ABC, abstractmethod
 
 import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler, OneHotEncoder, StandardScaler
+from analysis.analysis_src.univariate_analysis import hist_plot
 
 # Setup logging configuration
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
 
-class FeatureEngineeringStrategy(ABC):
+class FeatureEngineering(ABC):
     @abstractmethod
     def apply_transformation(self, df: pd.DataFrame) -> pd.DataFrame:
         pass
 
-class LogTransformation(FeatureEngineeringStrategy):
+class LogTransformation(FeatureEngineering):
     def __init__(self, features):
         self.features = features
 
@@ -29,7 +33,7 @@ class LogTransformation(FeatureEngineeringStrategy):
         return df_transformed
 
 
-class StandardScaling(FeatureEngineeringStrategy):
+class StandardScaling(FeatureEngineering):
     def __init__(self, features):
         self.features = features
         self.scaler = StandardScaler()
@@ -41,7 +45,7 @@ class StandardScaling(FeatureEngineeringStrategy):
         logging.info("Standard scaling completed.")
         return df_transformed
 
-class MinMaxScaling(FeatureEngineeringStrategy):
+class MinMaxScaling(FeatureEngineering):
     def __init__(self, features, feature_range=(0, 1)):
 
         self.features = features
@@ -56,7 +60,7 @@ class MinMaxScaling(FeatureEngineeringStrategy):
         logging.info("Min-Max scaling completed.")
         return df_transformed
 
-class OneHotEncoding(FeatureEngineeringStrategy):
+class OneHotEncoding(FeatureEngineering):
     def __init__(self, features):
         self.features = features
         self.encoder = OneHotEncoder(sparse=False, drop="first")
@@ -73,29 +77,17 @@ class OneHotEncoding(FeatureEngineeringStrategy):
         logging.info("One-hot encoding completed.")
         return df_transformed
 
-    def __init__(self, strategy: FeatureEngineeringStrategy):
-
-        self._strategy = strategy
-
-    def set_strategy(self, strategy: FeatureEngineeringStrategy):
-
-        logging.info("Switching feature engineering strategy.")
-        self._strategy = strategy
-
-    def apply_feature_engineering(self, df: pd.DataFrame) -> pd.DataFrame:
-
-        logging.info("Applying feature engineering strategy.")
-        return self._strategy.apply_transformation(df)
-
 
 # Example usage
 if __name__ == "__main__":
     # Example dataframe
-    # df = pd.read_csv('../extracted-data/your_data_file.csv')
-
+    df = pd.read_csv('/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/NY-House-Dataset.csv')
+    df_copy = df.copy()
     # Log Transformation Example
-    # log_transformer = FeatureEngineer(LogTransformation(features=['SalePrice', 'Gr Liv Area']))
-    # df_log_transformed = log_transformer.apply_feature_engineering(df)
+    log_transformer = LogTransformation(features=['BATH'])
+    df_log_transformed = log_transformer.apply_transformation(df_copy)
+    hist_plot().my_plot(df_log_transformed,'BATH')
+    
 
     # Standard Scaling Example
     # standard_scaler = FeatureEngineer(StandardScaling(features=['SalePrice', 'Gr Liv Area']))
