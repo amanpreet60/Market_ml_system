@@ -35,6 +35,7 @@ def ml_pipeline():
     # Handling Missing Values Step
     filled_data = handle_missing_value_step(raw_data)
 
+
     # Outlier Detection Step
     clean_data = outlier_detection_step(filled_data, column_name="PRICE",eng_type = 'iqr')
 
