@@ -7,6 +7,7 @@ from src.feature_engineering import (
     MinMaxScaling,
     OneHotEncoding,
     StandardScaling,
+    drop,
 )
 from zenml import step
 
@@ -29,6 +30,8 @@ def feature_engineering_step(
         engineer = MinMaxScaling(features)
     elif strategy == "onehot_encoding":
         engineer = OneHotEncoding(features)
+    elif strategy == 'drop':
+        engineer = drop(features)
     else:
         raise ValueError(f"Unsupported feature engineering strategy: {strategy}")
 

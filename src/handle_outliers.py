@@ -37,8 +37,8 @@ class feature_skew_kurt(handel_outliers):
         else:
             kurtosis_interpret = "Light-tailed (Uniform Distribution)"
 
-        logging.info('Skewness: ',skewness_interpret)
-        logging.info('Kurtosis: ',kurtosis_interpret)
+        print('Skewness: ',skewness_interpret)
+        print('Kurtosis: ',kurtosis_interpret)
     
     def z_score(self, df: pd.DataFrame, feature: str):
 
@@ -65,7 +65,6 @@ class feature_skew_kurt(handel_outliers):
 
         # Filter data
         df_filtered = df[(df[feature] >= lower_bound) & (df[feature] <= upper_bound)]
-        print(df_filtered)
         print("Outliers detected using the IQR method.")
 
         return df_filtered

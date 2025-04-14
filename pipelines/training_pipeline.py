@@ -8,6 +8,7 @@ from step._2_handle_missing_value_step import handle_missing_value_step
 from step._3_outlier_detection_step import outlier_detection_step
 from step._4_data_splitter_step import data_splitter_step
 from step._5_feature_engineering import feature_engineering_step
+from step._6_model_building_step import model_building_step
 
 '''from step.data_splitter_step import data_splitter_step
 from step.feature_engineering_step import feature_engineering_step
@@ -29,7 +30,7 @@ def ml_pipeline():
 
     # Data Ingestion Step
     raw_data = data_ingestion_step(
-        file_path="/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/NY-House-Dataset.csv"
+        file_path="/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/updated_housing_data.csv"
     )
 
     # Handling Missing Values Step
@@ -47,12 +48,10 @@ def ml_pipeline():
         y_train, strategy="log", features=["PRICE"]
     )
 
-    '''
-
-
     # Model Building Step
     model = model_building_step(X_train=X_train, y_train=y_train)
 
+    '''
     # Model Evaluation Step
     evaluation_metrics, mse = model_evaluator_step(
         trained_model=model, X_test=X_test, y_test=y_test

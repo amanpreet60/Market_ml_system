@@ -77,6 +77,18 @@ class OneHotEncoding(FeatureEngineering):
         logging.info("One-hot encoding completed.")
         return df_transformed
 
+class drop(FeatureEngineering):
+
+    def __init__(self, features):
+        self.features = features
+
+    def apply_transformation(self, df):
+        df_transformed = df.copy()
+        df_transformed = df_transformed.drop(columns=[self.features])
+        return df_transformed
+        
+
+
 
 # Example usage
 if __name__ == "__main__":
