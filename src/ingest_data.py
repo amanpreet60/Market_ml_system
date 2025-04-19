@@ -25,7 +25,7 @@ class ZipDataIngestor(DataIngestor):
         # Find the extracted CSV file (assuming there is one CSV file inside the zip)
         extracted_files = os.listdir("extracted_data")
         csv_files = [f for f in extracted_files if f.endswith(".csv")]
-
+        print(csv_files)
         if len(csv_files) == 0:
             raise FileNotFoundError("No CSV file found in the extracted data.")
         if len(csv_files) > 1:
@@ -53,10 +53,9 @@ class CsvDataIngestor(DataIngestor):
 
 if __name__ == "__main__":
     # # Specify the file path
-    file_path = "/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/NY-House-Dataset.csv"
-
+    file_path = '/Users/amanpreetsingh/My Computer/VSCode/Market/train.zip'
     # # Ingest the data and load it into a DataFrame
-    df = CsvDataIngestor().ingest(file_path)
+    df = ZipDataIngestor().ingest(file_path)
 
     print(df.head())  # Display the first few rows of the DataFrame
     pass
