@@ -9,12 +9,7 @@ from step._3_outlier_detection_step import outlier_detection_step
 from step._4_data_splitter_step import data_splitter_step
 from step._5_feature_engineering import feature_engineering_step
 from step._6_model_building_step import model_building_step
-
-'''from step.data_splitter_step import data_splitter_step
-from step.feature_engineering_step import feature_engineering_step
-from step.model_building_step import model_building_step
-from step.model_evaluator_step import model_evaluator_step
-'''
+from step._7_model_evaluator_step import model_evaluator_step
 
 from zenml import Model, pipeline, step, model
 
@@ -51,11 +46,10 @@ def ml_pipeline():
     # Model Building Step
     model = model_building_step(X_train=X_train, y_train=y_train)
 
-    '''
     # Model Evaluation Step
     evaluation_metrics, mse = model_evaluator_step(
         trained_model=model, X_test=X_test, y_test=y_test
-    )'''
+    )
 
     return
 

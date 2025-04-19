@@ -1,4 +1,3 @@
-# adding this so that i can import from my other folders : Temporary solution
 import sys
 sys.path.append('/Users/amanpreetsingh/My Computer/VSCode/Market')
 from typing import Tuple
