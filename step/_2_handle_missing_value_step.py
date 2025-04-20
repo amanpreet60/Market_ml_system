@@ -4,18 +4,16 @@ sys.path.append('/Users/amanpreetsingh/My Computer/VSCode/Market')
 # code starts here
 from zenml import step
 import logging
-from src.handle_missing_values import fill_missing_values,remove_missing_value
+from src.handle_missing_values import remove_missing_value
 import pandas as pd
  
-@step
-def handle_missing_value_step(df, _method: str = 'mean'):
+@step(enable_cache=False)
+def handle_missing_value_step(df, _method: str = 'remove'):
     if _method == 'remove':
         return remove_missing_value().handel(df)
-    elif _method in ['mean','median','mode','constant']:
-        return fill_missing_values(method=_method,fill_value=None).handel(df)
     else:
         raise ValueError(f"Unsupported missing value handling strategy: {_method}")
     
 
-'''df = pd.read_csv('/Users/amanpreetsingh/Desktop/VSCode/Market/extracted_data/NY-House-Dataset.csv')
-hande_missing_value_step(df)'''
+'''df = pd.read_csv('/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/updated_housing_data.csv')
+handle_missing_value_step(df)'''

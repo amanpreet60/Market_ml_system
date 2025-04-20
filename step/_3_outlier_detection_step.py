@@ -8,7 +8,7 @@ from src.handle_outliers import feature_skew_kurt
 from zenml import step
 
 
-@step
+@step(enable_cache=False)
 def outlier_detection_step(df: pd.DataFrame, column_name: str, eng_type: str = 'iqr') -> pd.DataFrame:
     """Detects and removes outliers using OutlierDetector."""
     logging.info(f"Starting outlier detection step with DataFrame of shape: {df.shape}")
@@ -28,8 +28,7 @@ def outlier_detection_step(df: pd.DataFrame, column_name: str, eng_type: str = '
     df_numeric = df.select_dtypes(include=[int, float])
 
     analyse = feature_skew_kurt()
-    checking = analyse.check_skew_kurt(df,column_name)
-    analyse.process_feature(checking[0],checking[1])
+    print(analyse.check_skew_kurt(df,column_name))
     if eng_type=='z_test':
         return analyse.z_score(df,column_name)
     elif eng_type == 'iqr':
@@ -40,6 +39,6 @@ def outlier_detection_step(df: pd.DataFrame, column_name: str, eng_type: str = '
         logging.error("Wrong Input")
 
 
-'''df = pd.read_csv('/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/NY-House-Dataset.csv')
-
-outlier_detection_step(df,'BEDS')'''
+'''df = pd.read_csv('/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/updated_housing_data.csv')
+outlier_detection_step(df,'SalePrice')
+'''

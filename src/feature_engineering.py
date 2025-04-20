@@ -25,7 +25,7 @@ class LogTransformation(FeatureEngineering):
         self.features = features
         self.apply_to_target = apply_to_target  # Whether to transform y as well
 
-    def apply_transformation(self, X_train, X_test, y_train, y_test):
+    def apply_transformation(self, X_train: pd.DataFrame, X_test: pd.DataFrame, y_train: pd.DataFrame, y_test: pd.DataFrame)-> tuple:
         logging.info(f"Applying log transformation to features: {self.features}")
         X_train_transformed = X_train.copy()
         X_test_transformed = X_test.copy()
@@ -40,7 +40,6 @@ class LogTransformation(FeatureEngineering):
             logging.info("Also applying log transformation to target.")
             y_train_transformed = np.log1p(y_train)
             y_test_transformed = np.log1p(y_test)
-
         logging.info("Log transformation completed.")
         return X_train_transformed, X_test_transformed, y_train_transformed, y_test_transformed
 
@@ -69,6 +68,9 @@ class LabelEncoding(FeatureEngineering):
             X_test_encoded[f"{feature}_encoded"] = X_test[feature].astype(str).apply(
                 lambda x: le.transform([x])[0] if x in known_classes else -1
             )
+            # Drop original feature after encoding
+            X_train_encoded.drop(columns=[feature], inplace=True)
+            X_test_encoded.drop(columns=[feature], inplace=True)
 
         logging.info("Label encoding completed.")
         return X_train_encoded, X_test_encoded, y_train, y_test

@@ -7,8 +7,9 @@ from src.feature_engineering import (
     Drop
 )
 from zenml import step
+import logging
 
-@step
+@step(enable_cache=False)
 def feature_engineering_step(
     X_train: pd.DataFrame,
     X_test: pd.DataFrame,
@@ -16,7 +17,7 @@ def feature_engineering_step(
     y_test: pd.DataFrame,
     strategy: str = "log",
     features: list = None,
-) -> tuple:
+) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """Performs feature engineering using selected strategy on X_train, X_test, y_train, and y_test."""
 
     # Ensure features is a list, even if not provided
@@ -37,6 +38,5 @@ def feature_engineering_step(
     X_train_transformed, X_test_transformed, y_train_transformed, y_test_transformed = engineer.apply_transformation(
         X_train, X_test, y_train, y_test
     )
-
     # Return the transformed data
     return X_train_transformed, X_test_transformed, y_train_transformed, y_test_transformed

@@ -7,6 +7,7 @@ import pandas as pd
 from abc import ABC, abstractmethod
 from sklearn.base import RegressorMixin
 from sklearn.metrics import mean_squared_error, r2_score
+import numpy as np
 
 #Abstract Base Class for Model Evaluation Strategy
 class ModelEvaluationStrategy(ABC):
@@ -20,16 +21,19 @@ class ModelEvaluationStrategy(ABC):
 # Concrete Strategy for Regression Model Evaluation
 class RegressionModelEvaluation(ModelEvaluationStrategy):
     def evaluate_model(
-        self, model: RegressorMixin, X_test: pd.DataFrame, y_test: pd.Series
+        self, model: RegressorMixin, X_test: pd.DataFrame, y_test: pd.DataFrame
     ) -> dict:
         logging.info("Predicting using the trained model.")
         y_pred = model.predict(X_test)
-
+        y_pred = np.expm1(y_pred)
+        y_test = np.expm1(y_test)
+        y_pred = pd.DataFrame(y_pred, columns=['SalePrice'])
         logging.info("Calculating evaluation metrics.")
         mse = mean_squared_error(y_test, y_pred)
+        rmse = np.sqrt(mse)
         r2 = r2_score(y_test, y_pred)
 
-        metrics = {"Mean Squared Error": mse, "R-Squared": r2}
+        metrics = {"Root Mean Squared Error": rmse, "R-Squared": r2}
 
         logging.info(f"Model Evaluation Metrics: {metrics}")
         return metrics

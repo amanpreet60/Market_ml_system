@@ -63,16 +63,9 @@ class feature_skew_kurt(handel_outliers):
         
 if __name__ == '__main__':
 
-    df = pd.read_csv('/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/NY-House-Dataset.csv')
+    df = pd.read_csv('/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/updated_housing_data.csv')
     print(df.shape)
     obj1 = feature_skew_kurt()
-    temp = obj1.check_skew_kurt(df,'BEDS')
-    print(temp)
-    obj1.process_feature(temp[0],temp[1])
-    df = obj1.iqr(df,'BEDS')
+    df = obj1.iqr(df,'SalePrice')
     print(df.shape)
-
-    obj1.visualize_outliers(df,['PRICE','BEDS','BATH'])
-    temp = obj1.check_skew_kurt(df,'BEDS')
-    obj1.process_feature(temp[0],temp[1])
 

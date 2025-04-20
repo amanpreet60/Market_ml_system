@@ -6,7 +6,7 @@ from zenml import step
 from src.ingest_data import ZipDataIngestor,CsvDataIngestor
 import pandas as pd
  
-@step
+@step(enable_cache=False)
 def data_ingestion_step(file_path: str):
     df = CsvDataIngestor().ingest(file_path)
     return df
