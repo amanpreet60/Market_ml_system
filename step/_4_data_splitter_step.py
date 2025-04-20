@@ -14,4 +14,4 @@ def data_splitter_step(
     """Splits the data into training and testing sets using DataSplitter."""
     splitter = SimpleTrainTestSplit()
     X_train, X_test, y_train, y_test = splitter.split_data(df, target_column)
-    return X_train, X_test, pd.DataFrame(y_train, columns=['PRICE']), pd.DataFrame(y_test, columns=['PRICE'])
+    return X_train, X_test, pd.DataFrame(y_train, columns=[target_column]), pd.DataFrame(y_test, columns=[target_column])

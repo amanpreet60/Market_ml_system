@@ -8,8 +8,8 @@ from step._2_handle_missing_value_step import handle_missing_value_step
 from step._3_outlier_detection_step import outlier_detection_step
 from step._4_data_splitter_step import data_splitter_step
 from step._5_feature_engineering import feature_engineering_step
-from step._6_model_building_step import model_building_step
-from step._7_model_evaluator_step import model_evaluator_step
+#from step._6_model_building_step import model_building_step
+#from step._7_model_evaluator_step import model_evaluator_step
 
 from zenml import Model, pipeline, step, model
 
@@ -33,16 +33,12 @@ def ml_pipeline():
 
 
     # Outlier Detection Step
-    clean_data = outlier_detection_step(filled_data, column_name="PRICE",eng_type = 'iqr')
+    clean_data = outlier_detection_step(filled_data, column_name="SalePrice",eng_type = 'iqr')
 
     #Data Splitting Step
-    X_train, X_test, y_train, y_test = data_splitter_step(clean_data, target_column="PRICE")
+    X_train, X_test, y_train, y_test = data_splitter_step(clean_data, target_column="SalePrice")
 
-    # Feature Engineering Step
-    engineered_data = feature_engineering_step(
-        y_train, strategy="log", features=["PRICE"]
-    )
-
+    '''
     # Model Building Step
     model = model_building_step(X_train=X_train, y_train=y_train)
 
@@ -50,7 +46,8 @@ def ml_pipeline():
     evaluation_metrics, mse = model_evaluator_step(
         trained_model=model, X_test=X_test, y_test=y_test
     )
-
+    '''
+    
     return
 
 

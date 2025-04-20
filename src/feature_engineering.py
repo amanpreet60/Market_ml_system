@@ -2,12 +2,13 @@ import logging
 # adding this so that i can import from my other folders : Temporary solution
 import sys
 sys.path.append('/Users/amanpreetsingh/My Computer/VSCode/Market')
-from abc import ABC, abstractmethod
 
-import numpy as np
+from sklearn.model_selection import train_test_split
+import logging
 import pandas as pd
-from sklearn.preprocessing import MinMaxScaler, OneHotEncoder, StandardScaler
-from analysis.analysis_src.univariate_analysis import hist_plot
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
+from abc import ABC, abstractmethod
 
 # Setup logging configuration
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -15,102 +16,98 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 
 class FeatureEngineering(ABC):
     @abstractmethod
-    def apply_transformation(self, df: pd.DataFrame) -> pd.DataFrame:
+    def apply_transformation(self, X_train: pd.DataFrame, X_test: pd.DataFrame, y_train: pd.DataFrame, y_test: pd.DataFrame) -> tuple:
         pass
 
+
 class LogTransformation(FeatureEngineering):
-    def __init__(self, features):
+    def __init__(self, features, apply_to_target=False):
         self.features = features
+        self.apply_to_target = apply_to_target  # Whether to transform y as well
 
-    def apply_transformation(self, df: pd.DataFrame) -> pd.DataFrame:
+    def apply_transformation(self, X_train, X_test, y_train, y_test):
         logging.info(f"Applying log transformation to features: {self.features}")
-        df_transformed = df.copy()
+        X_train_transformed = X_train.copy()
+        X_test_transformed = X_test.copy()
+        y_train_transformed = y_train.copy()
+        y_test_transformed = y_test.copy()
+
         for feature in self.features:
-            df_transformed[feature] = np.log1p(
-                df[feature]
-            )  # log1p handles log(0) by calculating log(1+x)
+            X_train_transformed[feature] = np.log1p(X_train[feature])
+            X_test_transformed[feature] = np.log1p(X_test[feature])
+
+        if self.apply_to_target:
+            logging.info("Also applying log transformation to target.")
+            y_train_transformed = np.log1p(y_train)
+            y_test_transformed = np.log1p(y_test)
+
         logging.info("Log transformation completed.")
-        return df_transformed
+        return X_train_transformed, X_test_transformed, y_train_transformed, y_test_transformed
 
 
-class StandardScaling(FeatureEngineering):
-    def __init__(self, features):
+class LabelEncoding(FeatureEngineering):
+    def __init__(self, features: list):
         self.features = features
-        self.scaler = StandardScaler()
+        self.encoders = {}
 
-    def apply_transformation(self, df: pd.DataFrame) -> pd.DataFrame:
-        logging.info(f"Applying standard scaling to features: {self.features}")
-        df_transformed = df.copy()
-        df_transformed[self.features] = self.scaler.fit_transform(df[self.features])
-        logging.info("Standard scaling completed.")
-        return df_transformed
-
-class MinMaxScaling(FeatureEngineering):
-    def __init__(self, features, feature_range=(0, 1)):
-
-        self.features = features
-        self.scaler = MinMaxScaler(feature_range=feature_range)
-
-    def apply_transformation(self, df: pd.DataFrame) -> pd.DataFrame:
-        logging.info(
-            f"Applying Min-Max scaling to features: {self.features} with range {self.scaler.feature_range}"
-        )
-        df_transformed = df.copy()
-        df_transformed[self.features] = self.scaler.fit_transform(df[self.features])
-        logging.info("Min-Max scaling completed.")
-        return df_transformed
-
-class OneHotEncoding(FeatureEngineering):
-    def __init__(self, features):
-        self.features = features
-        self.encoder = OneHotEncoder(sparse=False, drop="first")
-
-    def apply_transformation(self, df: pd.DataFrame) -> pd.DataFrame:
-        logging.info(f"Applying one-hot encoding to features: {self.features}")
-        df_transformed = df.copy()
-        encoded_df = pd.DataFrame(
-            self.encoder.fit_transform(df[self.features]),
-            columns=self.encoder.get_feature_names_out(self.features),
-        )
-        df_transformed = df_transformed.drop(columns=self.features).reset_index(drop=True)
-        df_transformed = pd.concat([df_transformed, encoded_df], axis=1)
-        logging.info("One-hot encoding completed.")
-        return df_transformed
-
-class drop(FeatureEngineering):
-
-    def __init__(self, features):
-        self.features = features
-
-    def apply_transformation(self, df):
-        df_transformed = df.copy()
-        df_transformed = df_transformed.drop(columns=[self.features])
-        return df_transformed
+    def apply_transformation(self, X_train: pd.DataFrame, X_test: pd.DataFrame, y_train: pd.DataFrame, y_test: pd.DataFrame) -> tuple:
+        logging.info(f"Applying label encoding to features: {self.features}")
         
+        X_train_encoded = X_train.copy()
+        X_test_encoded = X_test.copy()
+        
+        for feature in self.features:
+            le = LabelEncoder()
+            le.fit(X_train[feature].astype(str))  # Fit only on train
+            self.encoders[feature] = le
+
+            # Encode train
+            X_train_encoded[f"{feature}_encoded"] = le.transform(X_train[feature].astype(str))
+
+            # Encode test with handling unseen labels
+            known_classes = set(le.classes_)
+            X_test_encoded[f"{feature}_encoded"] = X_test[feature].astype(str).apply(
+                lambda x: le.transform([x])[0] if x in known_classes else -1
+            )
+
+        logging.info("Label encoding completed.")
+        return X_train_encoded, X_test_encoded, y_train, y_test
 
 
+class Drop(FeatureEngineering):
+    def __init__(self, features):
+        self.features = features
 
-# Example usage
+    def apply_transformation(self, X_train: pd.DataFrame, X_test: pd.DataFrame, y_train: pd.DataFrame, y_test: pd.DataFrame) -> tuple:
+        logging.info(f"Dropping features: {self.features}")
+        
+        X_train_dropped = X_train.drop(columns=self.features)
+        X_test_dropped = X_test.drop(columns=self.features)
+        
+        logging.info("Dropping completed.")
+        return X_train_dropped, X_test_dropped, y_train, y_test
+
+
+# Example Usage
 if __name__ == "__main__":
-    # Example dataframe
-    df = pd.read_csv('/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/NY-House-Dataset.csv')
-    df_copy = df.copy()
-    # Log Transformation Example
-    log_transformer = LogTransformation(features=['BATH'])
-    df_log_transformed = log_transformer.apply_transformation(df_copy)
-    hist_plot().my_plot(df_log_transformed,'BATH')
+    # Example dataframe (replace with actual data)
+    df = pd.read_csv('/Users/amanpreetsingh/My Computer/VSCode/Market/extracted_data/updated_housing_data.csv')
     
+    # Split your data
+    X = df.drop(columns=["SalePrice"])
+    y = df["SalePrice"]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    # Standard Scaling Example
-    # standard_scaler = FeatureEngineer(StandardScaling(features=['SalePrice', 'Gr Liv Area']))
-    # df_standard_scaled = standard_scaler.apply_feature_engineering(df)
+    # Apply transformations
+    log_transform = LogTransformation(features=["GrLivArea"], apply_to_target=True)
+    X_train_log, X_test_log, y_train_log, y_test_log = log_transform.apply_transformation(X_train, X_test, y_train, y_test)
 
-    # Min-Max Scaling Example
-    # minmax_scaler = FeatureEngineer(MinMaxScaling(features=['SalePrice', 'Gr Liv Area'], feature_range=(0, 1)))
-    # df_minmax_scaled = minmax_scaler.apply_feature_engineering(df)
+    label_encoder = LabelEncoding(features=["ExterQual"])
+    X_train_encoded, X_test_encoded, y_train_encoded, y_test_encoded = label_encoder.apply_transformation(X_train_log, X_test_log, y_train_log, y_test_log)
 
-    # One-Hot Encoding Example
-    # onehot_encoder = FeatureEngineer(OneHotEncoding(features=['Neighborhood']))
-    # df_onehot_encoded = onehot_encoder.apply_feature_engineering(df)
-
-    pass
+    #drop_columns = Drop(features=["LotConfig"])
+    #X_train_final, X_test_final, y_train_final, y_test_final = drop_columns.apply_transformation(X_train_encoded, X_test_encoded, y_train_encoded, y_test_encoded)
+    
+    # Check final transformed data
+    print(X_train_encoded.head())
+    print(y_train_encoded.head())

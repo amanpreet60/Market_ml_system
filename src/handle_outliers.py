@@ -19,27 +19,6 @@ class feature_skew_kurt(handel_outliers):
 
         return [float(skewness),float(kurt)]
     
-    def process_feature(self, skewness, kurtosis):
-
-        # Skewness Interpretation
-        if abs(skewness) < 0.5:
-            skewness_interpret = "Symmetric (Normal Distribution)"
-        elif skewness > 0:
-            skewness_interpret = "Right-Skewed"
-        else:
-            skewness_interpret = "Left-Skewed"
-
-        # Kurtosis Interpretation
-        if abs(kurtosis - 3) < 0.5:
-            kurtosis_interpret = "Normal Distribution"
-        elif kurtosis > 3:
-            kurtosis_interpret = "Heavy-tailed (Laplace/T-Distribution)"
-        else:
-            kurtosis_interpret = "Light-tailed (Uniform Distribution)"
-
-        print('Skewness: ',skewness_interpret)
-        print('Kurtosis: ',kurtosis_interpret)
-    
     def z_score(self, df: pd.DataFrame, feature: str):
 
         df['z_score'] = (df[feature] - df[feature].mean()) / df[feature].std()
@@ -79,15 +58,7 @@ class feature_skew_kurt(handel_outliers):
         df_filtered = df[(df[feature] >= lower_limit) & (df[feature] <= upper_limit)]
         print("Outliers detected using the winsorization method.")
         return df_filtered
-    
-    def visualize_outliers(self, df: pd.DataFrame, features: list):
-        logging.info(f"Visualizing outliers for features: {features}")
-        for feature in features:
-            plt.figure(figsize=(10, 6))
-            sns.boxplot(x=df[feature])
-            plt.title(f"Boxplot of {feature}")
-            plt.show()
-        logging.info("Outlier visualization completed.")
+
 
         
 if __name__ == '__main__':

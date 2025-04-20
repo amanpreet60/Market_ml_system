@@ -1,9 +1,14 @@
 
 import sys
 sys.path.append('/Users/amanpreetsingh/My Computer/VSCode/Market')
-from common_imports import *
 
-# Abstract Base Class for Model Evaluation Strategy
+import logging
+import pandas as pd
+from abc import ABC, abstractmethod
+from sklearn.base import RegressorMixin
+from sklearn.metrics import mean_squared_error, r2_score
+
+#Abstract Base Class for Model Evaluation Strategy
 class ModelEvaluationStrategy(ABC):
     @abstractmethod
     def evaluate_model(

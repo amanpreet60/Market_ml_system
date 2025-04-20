@@ -9,7 +9,7 @@ import pandas as pd
  
 @step
 def handle_missing_value_step(df, _method: str = 'mean'):
-    if _method == 'fill':
+    if _method == 'remove':
         return remove_missing_value().handel(df)
     elif _method in ['mean','median','mode','constant']:
         return fill_missing_values(method=_method,fill_value=None).handel(df)
