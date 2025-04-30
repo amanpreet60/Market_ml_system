@@ -53,7 +53,7 @@ def ml_pipeline():
         trained_model=model, X_test=X_test, y_test=y_test
     )
     
-    return
+    return model
 
 
 if __name__ == "__main__":
