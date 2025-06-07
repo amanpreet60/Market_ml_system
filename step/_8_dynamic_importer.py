@@ -8,27 +8,26 @@ def dynamic_importer() -> str:
     # Here, we simulate importing or generating some data.
     # In a real-world scenario, this could be an API call, database query, or loading from a file.
     data = {
-    "Order": [1, 2],
-    "PID": [1461, 1462],
-    "OverallQual": [5, 6],
-    "YearBuilt": [1961, 1958],
-    "YearRemodAdd": [1961, 1958],
-    "1stFlrSF": [896, 1329],
-    "GrLivArea": [896, 1329],
-    "FullBath": [1, 1],
+    "OverallQual": [7, 5],
+    "YearBuilt": [2006, 1966],
+    "YearRemodAdd": [2007, 1966],
+    "1stFlrSF": [625, 955],
+    "GrLivArea": [7.131699, 6.862758],
+    "FullBath": [2, 1],
     "Fireplaces": [0, 0],
-    "GarageArea": [730, 312],
-    "ExterQual": ["TA", "TA"],
-    "Foundation": ["CBlock", "CBlock"],
-    "HeatingQC": ["TA", "TA"],
-    "Neighborhood": ["NAmes", "NAmes"],
-    "CentralAir": ["Y", "Y"],
-    "SaleCondition": ["Normal", "Normal"],
-    "PavedDrive": ["Y", "Y"],
-    "LotShape": ["Reg", "IR1"],
-    "SaleType": ["WD", "WD"],
-    "HouseStyle": ["1Story", "1Story"],
+    "GarageArea": [625, 386],
+    "ExterQual": [2, 3],
+    "Foundation": [2, 1],
+    "HeatingQC": [0, 0],
+    "Neighborhood": [21, 19],
+    "CentralAir": [1, 1],
+    "SaleCondition": [4, 4],
+    "PavedDrive": [2, 2],
+    "LotShape": [0, 3],
+    "SaleType": [8, 8],
+    "HouseStyle": [5, 2],
 }
+
 
     df = pd.DataFrame(data)
 

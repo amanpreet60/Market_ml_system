@@ -13,7 +13,7 @@ requirements_file = os.path.join(os.path.dirname(__file__), "requirements.txt")
 
 
 @pipeline
-def continuous_deployment_pipeline():
+def continuous_deployment_pipeline_2():
     """Run a training job and deploy an MLflow model deployment."""
     # Run the training pipeline
     trained_model = ml_pipeline()  # No need for is_promoted return value anymore
@@ -30,7 +30,7 @@ def inference_pipeline():
 
     # Load the deployed model service
     model_deployment_service = prediction_service_loader(
-        pipeline_name="continuous_deployment_pipeline",
+        pipeline_name="continuous_deployment_pipeline_2",
         step_name="mlflow_model_deployer_step",
     )
 

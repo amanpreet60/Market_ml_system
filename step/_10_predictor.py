@@ -14,6 +14,7 @@ def predictor(
 
     # Start the service (should be a NOP if already started)
     service.start(timeout=10)
+    print('HIIIIII')
 
     # Load the input data from JSON string
     data = json.loads(input_data)
@@ -23,27 +24,24 @@ def predictor(
     data.pop("index", None)  # Remove 'index' if it's present
 
     # Define the columns the model expects
-    expected_columns = [
-        "Order", 
-        "PID", 
-        "OverallQual", 
-        "YearBuilt", 
-        "YearRemodAdd", 
-        "1stFlrSF", 
-        "GrLivArea", 
-        "FullBath", 
-        "Fireplaces", 
-        "GarageArea", 
-        "ExterQual", 
-        "Foundation", 
-        "HeatingQC", 
-        "Neighborhood", 
-        "CentralAir", 
-        "SaleCondition", 
-        "PavedDrive", 
-        "LotShape", 
-        "SaleType", 
-        "HouseStyle", 
+    expected_columns = ["OverallQual",
+        "YearBuilt",
+        "YearRemodAdd",
+        "1stFlrSF",
+        "GrLivArea",
+        "FullBath",
+        "Fireplaces",
+        "GarageArea",
+        "ExterQual_encoded",
+        "Foundation_encoded",
+        "HeatingQC_encoded",
+        "Neighborhood_encoded",
+        "CentralAir_encoded",
+        "SaleCondition_encoded",
+        "PavedDrive_encoded",
+        "LotShape_encoded",
+        "SaleType_encoded",
+        "HouseStyle_encoded"
     ]
 
 

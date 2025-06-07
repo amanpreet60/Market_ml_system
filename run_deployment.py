@@ -1,6 +1,6 @@
 import click
 from pipelines.deployment_pipeline import (
-    continuous_deployment_pipeline,
+    continuous_deployment_pipeline_2,
     inference_pipeline,
 )
 from rich import print
@@ -38,7 +38,7 @@ def run_main(stop_service: bool):
         return
 
     # Run the continuous deployment pipeline
-    continuous_deployment_pipeline()
+    continuous_deployment_pipeline_2()
 
     # Get the active model deployer
     model_deployer = MLFlowModelDeployer.get_active_model_deployer()
@@ -56,7 +56,7 @@ def run_main(stop_service: bool):
 
     # Fetch existing services with the same pipeline name, step name, and model name
     service = model_deployer.find_model_server(
-        pipeline_name="continuous_deployment_pipeline",
+        pipeline_name="continuous_deployment_pipeline_2",
         pipeline_step_name="mlflow_model_deployer_step",
     )
 

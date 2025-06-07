@@ -33,4 +33,4 @@ def prediction_service_loader(pipeline_name: str, step_name: str) -> MLFlowDeplo
     return existing_services[0]
 
 
-prediction_service_loader('continuous_deployment_pipeline','mlflow_model_deployer_step')
+#prediction_service_loader('continuous_deployment_pipeline_2','mlflow_model_deployer_step')
