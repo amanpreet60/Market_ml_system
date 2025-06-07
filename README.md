@@ -68,14 +68,14 @@ _The core intelligence of the project!_ Modularized Python scripts for various f
 _Granular control over your ML workflow!_ Individual, sequential steps that combine to form larger pipelines.
 - `_0_predictor.py`: The initial step for making predictions.
 - `_1_data_ingestion_step.py`: The first step in data processing: getting the data in!
-- `_2_handle_the_missing_value_s...`: The crucial step for addressing missing information.
+- `_2_handle_the_missing_value_s`: The crucial step for addressing missing information.
 - `_3_outlier_detection_step.py`: Identifying and processing anomalous data.
 - `_4_data_splitter_step.py`: Segmenting data for robust training and testing.
 - `_5_feature_engineering.py`: The step where raw data transforms into model-ready features.
 - `_6_model_building_step.py`: The actual model construction phase.
 - `_7_model_evaluator_step.py`: Measuring how well your model performs.
 - `_8_dynamic_importer.py`: A utility for dynamic module loading.
-- `_9_prediction_service_load...`: The final step for loading the prediction service.
+- `_9_prediction_service_load`: The final step for loading the prediction service.
 
 ---
 
