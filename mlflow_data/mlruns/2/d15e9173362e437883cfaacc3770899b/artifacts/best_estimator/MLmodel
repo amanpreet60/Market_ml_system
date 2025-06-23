@@ -1,0 +1,40 @@
+artifact_path: best_estimator
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.7
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+is_signature_from_type_hint: false
+mlflow_version: 2.22.1
+model_size_bytes: 343725
+model_uuid: d921341c8c214bef9b43bd3f8dd696ee
+prompts: null
+run_id: d15e9173362e437883cfaacc3770899b
+signature:
+  inputs: '[{"type": "long", "name": "OverallQual", "required": true}, {"type": "long",
+    "name": "YearBuilt", "required": true}, {"type": "long", "name": "YearRemodAdd",
+    "required": true}, {"type": "long", "name": "1stFlrSF", "required": true}, {"type":
+    "double", "name": "GrLivArea", "required": true}, {"type": "long", "name": "FullBath",
+    "required": true}, {"type": "long", "name": "Fireplaces", "required": true}, {"type":
+    "long", "name": "GarageArea", "required": true}, {"type": "long", "name": "ExterQual_encoded",
+    "required": true}, {"type": "long", "name": "Foundation_encoded", "required":
+    true}, {"type": "long", "name": "HeatingQC_encoded", "required": true}, {"type":
+    "long", "name": "Neighborhood_encoded", "required": true}, {"type": "long", "name":
+    "CentralAir_encoded", "required": true}, {"type": "long", "name": "SaleCondition_encoded",
+    "required": true}, {"type": "long", "name": "PavedDrive_encoded", "required":
+    true}, {"type": "long", "name": "LotShape_encoded", "required": true}, {"type":
+    "long", "name": "SaleType_encoded", "required": true}, {"type": "long", "name":
+    "HouseStyle_encoded", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float32", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-06-23 10:27:49.221844'

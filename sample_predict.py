@@ -1,6 +1,6 @@
 import requests
 
-url = "http://127.0.0.1:8002/invocations"
+url = "http://127.0.0.1:8001/invocations"
 
 input_data = {
     "dataframe_records": [
