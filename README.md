@@ -4,6 +4,8 @@
 
 This project provides a comprehensive framework for predicting house prices, encompassing everything from initial data exploration and preprocessing to model training, evaluation, and deployment. Our goal is to build a robust and scalable machine learning solution for real estate valuation.
 
+Learned from: "https://youtu.be/8UwhoPOO9I0?si=ibmbvEPt8Xu-TM4n"
+
 ## 📌 Project Objective
 
 The goal is to build a scalable and reproducible ML pipeline to predict housing prices using a dataset of real estate listings. This project is built as a learning experiment to explore the integration of ZenML and MLflow in a real-world workflow.
@@ -66,7 +68,6 @@ _The core intelligence of the project!_ Modularized Python scripts for various f
 
 ### `step/`
 _Granular control over your ML workflow!_ Individual, sequential steps that combine to form larger pipelines.
-- `_0_predictor.py`: The initial step for making predictions.
 - `_1_data_ingestion_step.py`: The first step in data processing: getting the data in!
 - `_2_handle_the_missing_value_s`: The crucial step for addressing missing information.
 - `_3_outlier_detection_step.py`: Identifying and processing anomalous data.
@@ -76,6 +77,7 @@ _Granular control over your ML workflow!_ Individual, sequential steps that comb
 - `_7_model_evaluator_step.py`: Measuring how well your model performs.
 - `_8_dynamic_importer.py`: A utility for dynamic module loading.
 - `_9_prediction_service_load`: The final step for loading the prediction service.
+- `_10_predictor.py`: The initial step for making predictions.
 
 ---
 

@@ -44,7 +44,6 @@ def ml_pipeline():
                                                                                                                       'PavedDrive', 'LotShape', 
                                                                                                                       'SaleType', 'HouseStyle'])
 
-    logging.info(X_train)
     # Model Building Step
     model = model_building_step(X_train=X_train, y_train=y_train)
 
